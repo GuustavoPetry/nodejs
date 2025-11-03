@@ -1,0 +1,8 @@
+Criar um arquivo no dirétorio atual:
+- type nul > nome_do_arquivo.txt
+
+Criar um arquivo em diretório específico:
+- type nul > C:\pasta\arquivo.txt
+
+Criar e editar um arquivo diretamente:
+- echo texto inicial > nome-do-arquivo.txt
