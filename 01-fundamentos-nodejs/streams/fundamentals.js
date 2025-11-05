@@ -1,9 +1,11 @@
-// Fundamentos de Streams
+// Para encadear dados entre Stream é converter o dado no tipo Buffer
+// Buffer.from() -> argumento necessita ser string
 
-import { Readable } from "node:stream";
+import { Readable, Transform, Writable } from "node:stream";
 
+// Stream de Leitura (Readable)
 class OneToHundredStream extends Readable {
-    index = 0;
+    index = 1;
 
     // Metódo obrigatório em classes que extendem 'Readable'
     _read() {
@@ -22,5 +24,23 @@ class OneToHundredStream extends Readable {
     }
 }
 
+// Stream de Transformação (Transform)
+class InverseNumber extends Transform {
+    _transform(chunk, encoding, callback) {
+        const transformed = Number(chunk.toString()) * -1;
+        callback(null, Buffer.from(String(transformed)));
+    }
+}
+
+// Stream de Escrita (Writeable)
+class MultiplyByTenStream extends Writable {
+    _write(chunk, encoding, callback) {
+        console.log(Number(chunk.toString()) * 10);
+        callback();
+    }
+}
+
 // Utiliza pipe() para passar os dados de Readable Stream (Fonte) para Writeable Stream (Destino)
-new OneToHundredStream().pipe(process.stdout);
+new OneToHundredStream()
+    .pipe(new InverseNumber())
+    .pipe(new MultiplyByTenStream());
