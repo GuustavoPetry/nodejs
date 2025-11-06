@@ -40,7 +40,10 @@ class MultiplyByTenStream extends Writable {
     }
 }
 
-// Utiliza pipe() para passar os dados de Readable Stream (Fonte) para Writeable Stream (Destino)
+/**
+ * Utiliza pipe() para encadear os dados de Readable Stream (Fonte) 
+ * para Transform Stream (Modificador) Writeable Stream (Destino)
+ */
 new OneToHundredStream()
     .pipe(new InverseNumber())
     .pipe(new MultiplyByTenStream());
