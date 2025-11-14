@@ -8,8 +8,9 @@ const server = http.createServer(async (req, res) => {
     // Middleware que converte os dados da requisição em JSON
     await json(req, res);
 
+    // Verifica se a rota da requisição é valida e testa o regex retornado no path.routes
     const route = routes.find(route => {
-        return route.method == method && route.path == url;
+        return route.method == method && route.path.test(url);
     });
 
     if(route) {
