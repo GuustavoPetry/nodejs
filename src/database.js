@@ -26,8 +26,15 @@ export class Database {
     }
 
     // Função que retorna todos os dados de uma determinada chave da propriedade #database
-    select(table) {
-        const data = this.#database[table] ?? [];
+    select(table, search) {
+        let data = this.#database[table] ?? [];
+        if(search) {
+            data = data.filter(row => {
+                return Object.entries(search).some(([key, value]) => {
+                    return row[key].toLowerCase().includes(value.toLowerCase());
+                });
+            });
+        }
         return data;
     }
 
