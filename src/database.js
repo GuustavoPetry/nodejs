@@ -46,9 +46,12 @@ export class Database {
         return data
     }
 
+    // Função para atualizar um registro já existente no banco de dados
     update(table, id, data) {
+        // Busca o index de um registro que contenha determinado ID
         const rowIndex = this.#database[table].findIndex(row => row.id == id);
 
+        // Se encontrou algum index, executa o update e persiste os dados no arquivo JSON
         if(rowIndex > -1) {
             this.#database[table][rowIndex] = { id, ...data };
             this.#persist();
@@ -57,10 +60,13 @@ export class Database {
         }
         return false;
     }
-
+    
+    // Função para deletar um registro do banco de dados
     delete(table, id) {
+        // Busca o index de um registro que contenha determinado ID
         const rowIndex = this.#database[table].findIndex(row => row.id == id);
 
+        // Se encontrou algum index, executa o delete e persiste os dados no arquivo JSON
         if(rowIndex > -1) {
             this.#database[table].splice(rowIndex, 1);
             this.#persist();
