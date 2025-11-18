@@ -7,7 +7,7 @@ export function buildRoutePath(path) {
     const pathWithParams = path.replaceAll(routeParametersRegex, "(?<$1>[a-z0-9\-_]+)"); // Nova Rota => /users/([a-z0-9-_]+)
 
     // Define uma nova regex utilizando pathWithParams, que inclui o endpoint 'users'
-    const pathRegex = new RegExp(`^${pathWithParams}`);
+    const pathRegex = new RegExp(`^${pathWithParams}(?<query>\\?(.*))?$`);
 
     // Retorna uma expressão regular
     return pathRegex;
