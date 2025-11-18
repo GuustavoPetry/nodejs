@@ -31,10 +31,36 @@ export const routes = [
         }
     },
     {
-        method: "DELETE",
-        path: buildRoutePath("/users/:id/groups/:groupId"), // Regex
+        method: "PUT",
+        path: buildRoutePath("/users/:id"), // Regex
         handler: (req, res) => {
-            return res.end();
+            const { id } = req.params;
+            const { name, email } = req.body;
+
+            const execute = database.update("users", id, { name, email });
+
+            if(execute) {
+                return res.writeHead(204).end();
+            } else {
+                return res.writeHead(404).end();
+            }
+
+        }
+    },
+    {
+        method: "DELETE",
+        path: buildRoutePath("/users/:id"), // Regex
+        handler: (req, res) => {
+            const { id } = req.params;
+
+            const execute = database.delete("users", id);
+
+            if(execute) {
+                return res.writeHead(204).end();
+            } else {
+                return res.writeHead(404).end();
+            }
+
         }
     }
 ]

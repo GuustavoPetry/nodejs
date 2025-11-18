@@ -14,10 +14,13 @@ const server = http.createServer(async (req, res) => {
     });
 
     if(route) {
+        // Captura os Routes Parameters com regex e separa em groups
         const routeParams = req.url.match(route.path);
 
-        console.log(routeParams);
+        // Passa os valores de Groups para req.params
+        req.params = { ...routeParams.groups }
 
+        // Dessa forma as rotas tem acesso aos paramêtros da requisição
         return route.handler(req, res);
     }
 
